@@ -3,6 +3,8 @@ import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import NextLink from 'next/link';
+import { Pagination } from "../../components/Pagination";
+import { useState } from "react";
 
 type User = {
     id: string;
@@ -12,12 +14,16 @@ type User = {
 }
 
 type Data = {
+    totalCount: number;
     users: User[];
 }
 
 export default function UserList() {
 
+    const [page, setPage] = useState(1);
+
     const data: Data = {
+        totalCount: 2,
         users: [{
             id: "001",
             name: "David",
@@ -98,6 +104,11 @@ export default function UserList() {
                             ))}
                         </Tbody>
                     </Table>
+                    <Pagination
+                        totalCount={data.totalCount}
+                        currentPage={page}
+                        onPageChange={setPage}
+                    />
                 </Box>
             </Flex>
         </Box>
