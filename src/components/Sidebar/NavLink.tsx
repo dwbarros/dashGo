@@ -5,6 +5,7 @@ import Link from "next/link"
 interface NavLinkProps extends ChakraLinkProps {
     icon: React.ElementType;
     href: string;
+    children: string;
 }
 
 export function NavLink({ icon, href, children, ...rest }: NavLinkProps) {
