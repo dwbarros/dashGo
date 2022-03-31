@@ -1,6 +1,5 @@
-import { Box, Stack, Text } from "@chakra-ui/layout";
-import { PaginationItem } from "./PaginationItem";
-
+import { Box, Stack, Text } from "@chakra-ui/layout"
+import { PaginationItem } from "./PaginationItem"
 
 interface PaginationProps {
 	totalCount: number;
@@ -15,12 +14,12 @@ const generatePagesArray = (from: number, to: number) =>
 		.filter(page => page > 0);
 
 
-export function Pagination({
+export const Pagination = ({
 	totalCount,
 	currentPage = 1,
 	registersPerPage = 10,
 	onPageChange
-}: PaginationProps) {
+}: PaginationProps) => {
 	const lastPage = Math.ceil(totalCount / registersPerPage);
 	const siblingsCount = 2;
 	const previousPages = currentPage > 1
