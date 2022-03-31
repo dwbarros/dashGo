@@ -5,30 +5,12 @@ import { useState } from "react";
 import NextLink from 'next/link';
 import { Box, Button, Checkbox, Flex, Heading, Icon, Link, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue } from "@chakra-ui/react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
-import { useQuery } from "react-query";
+import { useUsers } from "../../services/hooks/useUsers";
 
 
 export default function UserList() {
 
-    const { data, isLoading, error } = useQuery('users', async () => {
-        const response = await fetch('http://localhost:3000/api/users');
-        const data = await response.json();
-
-        const users = data.users.map(user => {
-            return {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
-                    day: '2-digit',
-                    month: 'long',
-                    year: 'numeric'
-                })
-            };
-        });
-
-        return users;
-    });
+    const { data, isLoading, isFetching, error } = useUsers();
 
     const [page, setPage] = useState(1);
 
@@ -46,6 +28,8 @@ export default function UserList() {
                     <Flex mb="8" justify="space-between" align="center">
                         <Heading size="lg" fontWeight="normal">
                             Usuários
+
+                            { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4"/> }
                         </Heading>
                         <NextLink href="/users/create" passHref>
                             <Button
@@ -117,7 +101,7 @@ export default function UserList() {
                                 </Tbody>
                             </Table>
                             <Pagination
-                                totalCount={data.totalCount}
+                                totalCount={10}
                                 currentPage={page}
                                 onPageChange={setPage}
                             />
